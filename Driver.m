@@ -8,5 +8,10 @@ imagesc(board);
 
 finishedSetup = false;
 while ~finishedSetup
-    setup();
+    [col, row] = getClickPosition();
+    if (col == 0 || row == 0)
+        finishedSetup = true;
+        return
+    end
 end
+
