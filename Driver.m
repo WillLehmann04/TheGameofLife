@@ -22,8 +22,19 @@ while ~finishedSetup
     % Loop that gets the setup parameters.
 
     [row, col] = getClickPosition();    % Gets the result of the function getClickPosition for later use in the loop.
-    if (col == 0 || row == 0)           % Because the output of getClickPosition is 0 if a key other than left click is pressed, this exits the loop.
-        finishedSetup = true;           % Makes the loop stop, setting the loop condition to true;
+    if (col == 0 || row == 0)           % Because the output of getClickPosition is 0 if a key other than left click is pressed, this exits the loop.           
+                                        % Makes the loop stop, setting the loop condition to true;
+        if (length(alive) == 2)                     % If only the default [0, 0] are in the alive matrix move on.
+            for cols = 1:size(board, 1)             % for each col on the board
+                for rows = 1:size(board, 1)         % for each row on the board
+                    if (randi(3,1,1) == 1)          % Generate a randomi between 1 and 3 inclusive, if its 1 move on
+                        alive=[alive; cols, rows];  % add the col and row to the alive variable.
+                    end
+                end
+            end
+            displayBoard(board, alive);             % Display the new board.
+        end
+        finishedSetup = true;   % End the loop
     end
     if (ismember([col, row], alive, 'rows'))    % Checks to see if the col and row are a part of the alive matrix
         for i = 1:size(alive, 1)                % if it is apart of the alive matrix it loops through all alive 
@@ -57,7 +68,7 @@ while ~isempty(alive)
     displayBoard(board, alive);     % Displays the new alive data.
 
     generation = generation + 1;                % Increments the generation variable by 1 everytime the loop runs.
-    fprintf("Generation: %d", generation);      % Displays the current Generation.
+    fprintf("Generation: %d\n", generation);      % Displays the current Generation.
     pause(generationSpeed);                     % Pauses for the determined time in the initialisation.
 end
 % General clean up of variables and console
