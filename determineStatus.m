@@ -23,21 +23,9 @@ function [ nextGeneration ] = determineStatus(col, row, alive, board)
         if (alive(g, 1) == col && alive(g,2) == row) isAlive = true; end
     end
 
-    if (isAlive && totalCounter <= 1)
-        nextGeneration = false;
-        return;
-    end
-    if (isAlive && totalCounter >= 4)
-        nextGeneration = false;
-        return;
-    end
-    if (isAlive && (totalCounter == 2 || totalCounter == 3))
+    if ((isAlive && ~(totalCounter <= 1 || totalCounter >= 4)) || (~isAlive && totalCounter == 3))
         nextGeneration = true;
-        return;
-    end
-    if (~isAlive && totalCounter == 3)
-        nextGeneration = true;
-        return;
+        return
     end
     nextGeneration = false;
 end
