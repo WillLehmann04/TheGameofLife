@@ -1,3 +1,6 @@
+clear;
+clc;
+
 alive = [0,0];
 board = zeros(20);
 
@@ -15,14 +18,21 @@ while ~finishedSetup
         return
     end
     if (ismember([col, row], alive, 'rows'))
-        alive(col, row) = [];
-        continue;
+        for i = 1:size(alive, 1)
+            if all(alive(i,:) == [col, row])
+                idx = i;
+                break;
+            end
+        end
+        alive(idx,:) = [];
+    else
+        alive = [alive; col, row];
     end
-    alive = [alive; col, row];
-    
+    displayBoard(board, alive);
+end
 
-    %temp
-    board(col, row) = 1;
-    imagesc(board);
+while 1
+
+pause(1);
 end
 
